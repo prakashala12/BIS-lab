@@ -1,0 +1,31 @@
+
+import numpy as np
+
+# Soil moisture values for 3x3 farmland cells
+field = np.array([
+    [20, 45, 70],
+    [30, 85, 40],
+    [60, 25, 90]
+])
+
+# Moisture threshold
+threshold = 40
+
+print("Soil Moisture Levels:")
+print(field)
+
+print("\nIrrigation Decisions:")
+
+# Process all cells in parallel using NumPy
+irrigation = np.where(
+    field < 30, "High Water",
+    np.where(field < threshold, "Medium Water",
+             np.where(field < 80, "Low Water", "No Water"))
+)
+
+print(irrigation)
+
+print("\nFinal Irrigation Result:")
+for i in range(3):
+    for j in range(3):
+        print(f"Cell ({i+1},{j+1}): {irrigation[i,j]}")
